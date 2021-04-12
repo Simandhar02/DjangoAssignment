@@ -1,9 +1,9 @@
+from client_home.settings import logger
 from django.http.response import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
-from client_home.settings import logger
 
 from .models import ClientModel, ProductModel, HouseModel, RoomModel
 from .serializers import ProductModelSerializer, HouseModelSerializer, RoomModelSerializer, ClientModelSerializer
@@ -21,12 +21,6 @@ def client_view(request, client_id):
         return JsonResponse(client_serializer.data)
 
     elif request.method == 'PUT':
-        # client_data = JSONParser().parse(request)
-        # client_serializer = ClientModelSerializer(client, data=client_data)
-        # if client_serializer.is_valid():
-        #     client_serializer.save()
-        #     return JsonResponse(client_serializer.data)
-        # return JsonResponse(client_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return put_request_update_data(request, client, ClientModelSerializer)
 
     elif request.method == 'DELETE':
@@ -39,61 +33,18 @@ def client_view(request, client_id):
 def add_client(request):
     if request.method == 'POST':
         return post_request_add_data(request, ClientModelSerializer)
-        # client_data = JSONParser().parse(request)
-        # client_serializer = ClientModelSerializer(data=client_data)
-        # if client_serializer.is_valid():
-        #     client_serializer.save()
-        #     return JsonResponse(client_serializer.data, status=status.HTTP_201_CREATED)
-        # return JsonResponse(client_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
 def add_product(request):
     if request.method == 'POST':
         return post_request_add_data(request, ProductModelSerializer)
-        # product_data = JSONParser().parse(request)
-        # product_serializer = ProductModelSerializer(data=product_data)
-        # if product_serializer.is_valid():
-        #     product_serializer.save()
-        #     return JsonResponse(product_serializer.data, status=status.HTTP_201_CREATED)
-        # return JsonResponse(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def product_view(request, pk):
-#     try:
-#         product = check_product(product_id)
-#     except ProductModel.DoesNotExist:
-#         return JsonResponse({'message': 'The product does not exist'}, status=status.HTTP_404_NOT_FOUND)
-# 
-#     if request.method == 'GET':
-#         product_serializer = ProductModelSerializer(product)
-#         return JsonResponse(product_serializer.data)
-# 
-#     elif request.method == 'PUT':
-#         # product_data = JSONParser().parse(request)
-#         # product_serializer = ProductModelSerializer(product, data=product_data)
-#         # if product_serializer.is_valid():
-#         #     product_serializer.save()
-#         #     return JsonResponse(product_serializer.data)
-#         # return JsonResponse(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#         return put_request_update_data(request, product, ProductModelSerializer)
-# 
-#     elif request.method == 'DELETE':
-#         product.delete()
-#         return JsonResponse({'message': 'Product was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])
 def add_house(request):
     if request.method == 'POST':
         return post_request_add_data(request, HouseModelSerializer)
-        # house_data = JSONParser().parse(request)
-        # house_serializer = HouseModelSerializer(data=house_data)
-        # if house_serializer.is_valid():
-        #     house_serializer.save()
-        #     return JsonResponse(house_serializer.data, status=status.HTTP_201_CREATED)
-        # return JsonResponse(house_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -108,12 +59,6 @@ def house_view(request, house_id):
         return JsonResponse(house_serializer.data)
 
     elif request.method == 'PUT':
-        # house_data = JSONParser().parse(request)
-        # house_serializer = HouseModelSerializer(house, data=house_data)
-        # if house_serializer.is_valid():
-        #     house_serializer.save()
-        #     return JsonResponse(house_serializer.data)
-        # return JsonResponse(house_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return put_request_update_data(request, house, HouseModelSerializer)
 
     elif request.method == 'DELETE':
@@ -150,12 +95,6 @@ def client_house_modify(request, client_id, house_id):
         return JsonResponse(house_serializer.data, safe=False)
 
     elif request.method == 'PUT':
-        # house_data = JSONParser().parse(request)
-        # house_serializer = HouseModelSerializer(house, data=house_data)
-        # if house_serializer.is_valid():
-        #     house_serializer.save()
-        #     return JsonResponse(house_serializer.data)
-        # return JsonResponse(house_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return put_request_update_data(request, house, HouseModelSerializer)
 
     elif request.method == 'DELETE':
@@ -182,12 +121,6 @@ def get_rooms_for_client_house(request, client_id, house_id):
 def add_room(request):
     if request.method == 'POST':
         return post_request_add_data(request, RoomModelSerializer)
-        # room_data = JSONParser().parse(request)
-        # room_serializer = RoomModelSerializer(data=room_data)
-        # if room_serializer.is_valid():
-        #     room_serializer.save()
-        #     return JsonResponse(room_serializer.data, status=status.HTTP_201_CREATED)
-        # return JsonResponse(room_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PUT', 'DELETE', 'GET'])
@@ -212,12 +145,6 @@ def modify_clients_rooms(request, client_id, house_id, room_id):
         return JsonResponse(room_serializer.data, safe=False)
 
     elif request.method == 'PUT':
-        # room_data = JSONParser().parse(request)
-        # room_serializer = RoomModelSerializer(room, data=room_data)
-        # if room_serializer.is_valid():
-        #     room_serializer.save()
-        #     return JsonResponse(room_serializer.data)
-        # return JsonResponse(room_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return put_request_update_data(request, room, RoomModelSerializer)
 
     elif request.method == 'DELETE':
@@ -264,8 +191,6 @@ def modify_products(request, client_id, house_id, room_id, product_id):
     except ProductModel.DoesNotExist:
         return JsonResponse({'message': 'The Product {} does not exist'.format(product_id)},
                             status=status.HTTP_404_NOT_FOUND)
-    # client, house, room, product = get_basic_data(client_id=client_id, house_id=house_id,
-    #                                               room_id=room_id, product_id=product_id)
 
     if request.method == 'GET':
         product = ProductModel.objects.all().filter(pk=product_id,
@@ -274,12 +199,6 @@ def modify_products(request, client_id, house_id, room_id, product_id):
         return JsonResponse(product_serializer.data, safe=False)
 
     elif request.method == 'PUT':
-        # product_data = JSONParser().parse(request)
-        # product_serializer = ProductModelSerializer(product, data=product_data)
-        # if product_serializer.is_valid():
-        #     product_serializer.save()
-        #     return JsonResponse(product_serializer.data)
-        # return JsonResponse(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return put_request_update_data(request, product, ProductModelSerializer)
 
     elif request.method == 'DELETE':

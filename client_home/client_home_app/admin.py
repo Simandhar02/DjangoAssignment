@@ -1,6 +1,8 @@
-from django.contrib import admin
 from django.apps import apps
+from django.contrib import admin
+
 from .models import ClientModel, RoomModel, ProductModel, HouseModel
+
 models = apps.get_models()
 
 
